@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com;">
+  <title>Prompt Compiler</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-container">
+    <!-- Header -->
+    <header class="popup-header">
+      <div class="title-row">
+        <span class="app-icon">⚡</span>
+        <h1>Prompt Compiler</h1>
+      </div>
+      <select id="templateSelect" class="template-select">
+        <option value="auto">Auto-detect</option>
+        <option value="coding">💻 Coding</option>
+        <option value="explanation">📚 Explanation</option>
+        <option value="creative">✨ Creative</option>
+        <option value="analysis">🔍 Analysis</option>
+        <option value="general">📝 General</option>
+      </select>
+    </header>
+
+    <!-- Input Section -->
+    <section class="input-section">
+      <textarea 
+        id="inputArea" 
+        class="input-field" 
+        placeholder="Type your prompt..."
+        autofocus
+      ></textarea>
+      <div class="input-meta">
+        <span id="charCount">0 chars</span>
+        <span class="shortcut-hint">⌘⇧P to toggle</span>
+      </div>
+    </section>
+
+    <!-- Divider -->
+    <div class="divider">
+      <span class="divider-label">Optimized Output</span>
+      <div class="confidence-row">
+        <div class="confidence-bar">
+          <div class="confidence-fill" id="confidenceFill"></div>
+        </div>
+        <span id="confidenceValue">0%</span>
+      </div>
+    </div>
+
+    <!-- Output Section -->
+    <section class="output-section">
+      <div class="output-content" id="outputContent">
+        <span class="placeholder">Start typing to see the optimized prompt...</span>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="popup-footer">
+      <div class="stats">
+        <span id="templateName">—</span>
+        <span class="separator">•</span>
+        <span id="processingTime">—</span>
+      </div>
+      <button class="copy-btn" id="copyBtn" disabled>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="9" y="9" width="13" height="13" rx="2"></rect>
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+        </svg>
+        <span>Copy</span>
+      </button>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
