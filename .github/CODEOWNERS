@@ -1,0 +1,10 @@
+# CODEOWNERS - Require owner approval for all PRs
+# See: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Default owner for everything
+* @wharris23
+
+# Specific paths (optional, examples):
+# /electron/     @wharris23
+# /src/          @wharris23
+# *.md           @wharris23
