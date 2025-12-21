@@ -1,34 +1,72 @@
 {
-    "name": "prompt-compiler",
-    "version": "1.0.0",
-    "description": "Transform underspecified inputs into optimized LLM prompts from your menu bar",
-    "main": "electron/main.js",
-    "scripts": {
-        "start": "electron .",
-        "dev": "electron . --dev",
-        "package": "electron-builder --mac",
-        "package:dmg": "electron-builder --mac dmg"
+  "name": "prompt-compiler",
+  "version": "1.0.0",
+  "description": "Transform underspecified inputs into optimized LLM prompts from your menu bar",
+  "main": "electron/main.js",
+  "author": "Wyatt Harris",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "build": "electron-builder",
+    "build:mac": "electron-builder --mac",
+    "build:win": "electron-builder --win",
+    "build:linux": "electron-builder --linux"
+  },
+  "devDependencies": {
+    "electron": "^33.0.0",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "com.promptcompiler.app",
+    "productName": "Prompt Compiler",
+    "copyright": "Copyright © 2024 Wyatt Harris",
+    "mac": {
+      "category": "public.app-category.developer-tools",
+      "icon": "assets/icon.icns",
+      "target": [
+        { "target": "dmg", "arch": ["universal"] },
+        { "target": "zip", "arch": ["universal"] }
+      ],
+      "darkModeSupport": true
     },
-    "author": "",
-    "license": "MIT",
-    "devDependencies": {
-        "electron": "^33.0.0",
-        "electron-builder": "^25.1.8"
+    "win": {
+      "target": [
+        { "target": "nsis", "arch": ["x64"] },
+        { "target": "portable", "arch": ["x64"] }
+      ],
+      "icon": "assets/icon.ico"
     },
-    "build": {
-        "appId": "com.promptcompiler.app",
-        "productName": "Prompt Compiler",
-        "mac": {
-            "category": "public.app-category.developer-tools",
-            "icon": "assets/icon.icns",
-            "target": ["dmg", "zip"]
-        },
-        "files": [
-            "electron/**/*",
-            "src/**/*",
-            "popup.html",
-            "popup.css",
-            "assets/**/*"
-        ]
+    "linux": {
+      "target": [
+        { "target": "AppImage", "arch": ["x64"] },
+        { "target": "deb", "arch": ["x64"] }
+      ],
+      "category": "Development",
+      "icon": "assets"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "dmg": {
+      "title": "${productName} ${version}",
+      "window": { "width": 540, "height": 380 },
+      "contents": [
+        { "x": 130, "y": 186 },
+        { "x": 410, "y": 186, "type": "link", "path": "/Applications" }
+      ]
+    },
+    "files": [
+      "electron/**/*",
+      "src/**/*",
+      "popup.html",
+      "popup.css",
+      "popup.js",
+      "assets/**/*"
+    ],
+    "directories": {
+      "output": "dist"
     }
+  }
 }
