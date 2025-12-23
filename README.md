@@ -1,17 +1,14 @@
 # ⚡ Prompt Compiler
 
-A lightweight menu bar app that transforms your simple prompts into optimized,
-structured prompts for LLMs like ChatGPT and Claude.
+A lightweight menu bar app that transforms your simple prompts into optimized, structured prompts for LLMs like ChatGPT and Claude.
 
 **Zero API calls. 100% local. Unlimited free uses.**
 
 ## ✨ Features
 
 - 🖥️ **Menu bar app** – Lives in your system tray (macOS/Windows/Linux)
-- ⌨️ **Global shortcut** – Press `⌘+Shift+P` (Mac) or `Ctrl+Shift+P` (Win/Linux)
-  from anywhere
-- 🎯 **Smart intent detection** – Auto-detects coding, explanation, creative, or
-  analysis prompts
+- ⌨️ **Global shortcut** – Press `⌘+Shift+P` (Mac) or `Ctrl+Shift+P` (Win/Linux) from anywhere
+- 🎯 **Smart intent detection** – Auto-detects coding, explanation, creative, or analysis prompts
 - 📋 **One-click copy** – Optimized prompt copied to clipboard instantly
 - 🔒 **100% offline** – No API keys, no data sent anywhere
 - ⚡ **Instant** – <1ms processing time
@@ -20,14 +17,13 @@ structured prompts for LLMs like ChatGPT and Claude.
 
 ### Download Pre-built Binaries
 
-Go to [Releases](https://github.com/wharris23/prompt_builder/releases) and
-download for your platform:
+Go to [Releases](https://github.com/wharris23/prompt_builder/releases) and download for your platform:
 
-| Platform    | File                                                                      |
-| ----------- | ------------------------------------------------------------------------- |
-| **macOS**   | `Prompt.Compiler-x.x.x-universal.dmg`                                     |
+| Platform | File |
+|Data | |
+| **macOS** | `Prompt.Compiler-x.x.x-universal.dmg` |
 | **Windows** | `Prompt.Compiler-x.x.x-Setup.exe` or `Prompt.Compiler-x.x.x-portable.exe` |
-| **Linux**   | `Prompt.Compiler-x.x.x.AppImage` or `.deb`                                |
+| **Linux** | `Prompt.Compiler-x.x.x.AppImage` or `.deb` |
 
 ### macOS Note
 
@@ -59,10 +55,8 @@ npm run build:linux  # Linux
 
 1. **Open the app** – Click the tray icon or press `⌘+Shift+P` / `Ctrl+Shift+P`
 2. **Type your prompt** – Enter your basic prompt idea
-3. **Select template** – Use auto-detect or manually choose (Coding,
-   Explanation, Creative, Analysis)
-4. **Copy & use** – Click Copy or press `⌘+Enter` / `Ctrl+Enter`, then paste
-   into ChatGPT/Claude
+3. **Select template** – Use auto-detect or manually choose (Coding, Explanation, Creative, Analysis)
+4. **Copy & use** – Click Copy or press `⌘+Enter` / `Ctrl+Enter`, then paste into ChatGPT/Claude
 
 ### Example
 
@@ -93,21 +87,21 @@ Create a calendar website with dark theme
 
 ## 🎨 Templates
 
-| Template           | Use Case                                         |
-| ------------------ | ------------------------------------------------ |
-| 💻 **Coding**      | Programming, debugging, building apps            |
+| Template | Use Case |
+| --- | --- |
+| 💻 **Coding** | Programming, debugging, building apps |
 | 📚 **Explanation** | Learning concepts, understanding how things work |
-| ✨ **Creative**    | Writing stories, poems, creative content         |
-| 🔍 **Analysis**    | Evaluating options, pros/cons, decision making   |
-| 📝 **General**     | Everything else                                  |
+| ✨ **Creative** | Writing stories, poems, creative content |
+| 🔍 **Analysis** | Evaluating options, pros/cons, decision making |
+| � **General** | Everything else |
 
 ## ⌨️ Keyboard Shortcuts
 
-| Action        | macOS       | Windows/Linux  |
-| ------------- | ----------- | -------------- |
+| Action | macOS | Windows/Linux |
+| --- | --- | --- |
 | Toggle window | `⌘+Shift+P` | `Ctrl+Shift+P` |
-| Copy output   | `⌘+Enter`   | `Ctrl+Enter`   |
-| Close window  | `Escape`    | `Escape`       |
+| Copy output | `⌘+Enter` | `Ctrl+Enter` |
+| Close window | `Escape` | `Escape` |
 
 ## 🛠️ Development
 

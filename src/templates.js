@@ -1,126 +1,120 @@
 /**
  * Prompt Template System
- * Pre-optimized templates for different intent categories
+ * Optimized for Code Intelligence Modes & Model Strategies
  */
 
+import { profileManager } from './profiles.js';
+import { getModelStrategy } from './models.js';
+
 const TEMPLATES = {
-  coding: {
-    name: 'Code Assistant',
-    description: 'Optimized for programming tasks with step-by-step reasoning',
-    template: `You are an expert software engineer. Your task is to help with the following coding request.
+  code_generation: {
+    name: 'Code Generation',
+    description: 'Build new functionality with clear, safe code',
+    generate: (profile, strategy) => {
+      const settings = strategy.formatList([
+        strategy.formatKeyValue('Tone', profile.tone),
+        strategy.formatKeyValue('Assumptions', profile.assumptions)
+      ]);
 
-## Instructions
-- Think step-by-step before writing any code
-- Consider edge cases and error handling
-- Provide clear, well-commented code
-- Explain your reasoning and any trade-offs
+      const structureItems = profile.structure.map((section, i) => `${i + 1}. ${section}`);
+      const formatReqs = strategy.formatList(structureItems);
 
-## User Request
-{{input}}
+      return `You are an expert software engineer. Your task is to write code that is ${profile.tone}.
 
-## Response Format
-1. **Understanding**: Briefly restate what you need to accomplish
-2. **Approach**: Outline your solution strategy
-3. **Implementation**: Provide the code with inline comments
-4. **Testing**: Suggest how to verify the solution works`
+${strategy.formatSection('Profile Settings', settings)}
+
+${strategy.formatSection('Format Requirements', formatReqs)}
+
+${strategy.formatSection('User Request', '{{input}}')}
+
+${strategy.formatSection('Instructions', strategy.formatList([
+        'Write production-ready code',
+        'Include clear comments explaining logic',
+        'Handle errors and edge cases explicitly',
+        'Avoid overengineering'
+      ]))}`;
+    }
   },
 
-  explanation: {
-    name: 'Concept Explainer',
-    description: 'Structured explanations with analogies and examples',
-    template: `You are a knowledgeable educator. Your task is to explain a concept clearly and thoroughly.
+  code_review: {
+    name: 'Code Review',
+    description: 'Find bugs and improve code quality',
+    generate: (profile, strategy) => {
+      const settings = strategy.formatList([
+        strategy.formatKeyValue('Tone', profile.tone),
+        strategy.formatKeyValue('Assumptions', profile.assumptions)
+      ]);
 
-## Instructions
-- Start with a simple, one-sentence summary
-- Use analogies to make abstract concepts concrete
-- Provide concrete examples
-- Build from simple to complex
-- Anticipate and address common misconceptions
+      const formatReqs = strategy.formatList([
+        '1. Summary: High-level feedback',
+        '2. Issues: Critical bugs and logic errors',
+        '3. Suggestions: Improvements for readability and performance'
+      ]);
 
-## User Question
-{{input}}
+      return `You are a strict code reviewer. Review the following code.
 
-## Response Format
-1. **TL;DR**: One-sentence summary accessible to a beginner
-2. **Core Concept**: Detailed explanation with analogies
-3. **Examples**: 2-3 concrete examples demonstrating the concept
-4. **Common Pitfalls**: Misconceptions to avoid
-5. **Going Deeper**: Resources or related topics to explore`
+${strategy.formatSection('Profile Settings', settings)}
+
+${strategy.formatSection('Format Requirements', formatReqs)}
+
+${strategy.formatSection('Code to Review', '{{input}}')}
+
+${strategy.formatSection('Instructions', strategy.formatList([
+        'Focus on correctness and safety first',
+        'Provide specific line-by-line feedback where necessary',
+        'Suggest refactors only if they significantly improve the code'
+      ]))}`;
+    }
   },
 
-  creative: {
-    name: 'Creative Writer',
-    description: 'Open-ended creative prompts with style guidance',
-    template: `You are a skilled creative writer. Your task is to craft engaging, original content.
+  code_understanding: {
+    name: 'Code Understanding',
+    description: 'Explain complex code simply',
+    generate: (profile, strategy) => {
+      const settings = strategy.formatList([
+        strategy.formatKeyValue('Tone', profile.tone),
+        strategy.formatKeyValue('Assumptions', profile.assumptions)
+      ]);
 
-## Instructions
-- Prioritize vivid, sensory language
-- Develop authentic voice and tone
-- Show, don't tell
-- Create engaging hooks and satisfying conclusions
-- Balance creativity with coherence
+      const formatReqs = strategy.formatList([
+        '1. Summary: What does this code do in one sentence?',
+        '2. Step-by-Step: Walk through the logic',
+        '3. Notes: Key takeaways or warnings'
+      ]);
 
-## Creative Brief
-{{input}}
+      return `You are a patient expert. Explain the following code.
 
-## Guidelines
-- Length: Appropriate to the form requested
-- Style: Match the tone implied by the request
-- Structure: Use appropriate formatting (paragraphs, stanzas, scenes)`
-  },
+${strategy.formatSection('Profile Settings', settings)}
 
-  analysis: {
-    name: 'Critical Analyst',
-    description: 'Systematic evaluation with balanced perspectives',
-    template: `You are a thoughtful analyst. Your task is to provide a balanced, thorough evaluation.
+${strategy.formatSection('Format Requirements', formatReqs)}
 
-## Instructions
-- Consider multiple perspectives
-- Use evidence and reasoning to support claims
-- Acknowledge limitations and uncertainties
-- Avoid bias while being decisive
-- Provide actionable insights
+${strategy.formatSection('Code to Explain', '{{input}}')}
 
-## Analysis Request
-{{input}}
-
-## Response Format
-1. **Context**: Brief background on the subject
-2. **Key Factors**: Main elements to consider
-3. **Analysis**: Detailed examination from multiple angles
-4. **Trade-offs**: Pros, cons, and considerations
-5. **Recommendation**: Clear, justified conclusion`
-  },
-
-  general: {
-    name: 'General Assistant',
-    description: 'Universal best-practices wrapper for any request',
-    template: `You are a helpful, accurate, and thoughtful assistant.
-
-## Instructions
-- Understand the request fully before responding
-- Be direct and concise while being complete
-- If the request is ambiguous, address the most likely interpretation while noting alternatives
-- Structure your response for clarity
-- Cite sources or note uncertainties when relevant
-
-## User Request
-{{input}}
-
-## Guidelines
-- Prioritize accuracy over speed
-- Break complex topics into digestible parts
-- Use formatting (lists, headers) when helpful`
+${strategy.formatSection('Instructions', strategy.formatList([
+        'Use simple, accessible language',
+        'Avoid unnecessary jargon',
+        'Call out potential "gotchas" or tricky parts'
+      ]))}`;
+    }
   }
 };
 
 /**
  * Get a template by intent name
  * @param {string} intent - The classified intent
+ * @param {string} modelId - The target model ID (gemini, claude, gpt)
  * @returns {{ name: string, description: string, template: string }}
  */
-export function getTemplate(intent) {
-  return TEMPLATES[intent] || TEMPLATES.general;
+export function getTemplate(intent, modelId = 'gemini') {
+  const profile = profileManager.getCurrentProfile();
+  const strategy = getModelStrategy(modelId);
+  const templateConfig = TEMPLATES[intent] || TEMPLATES.code_generation;
+
+  return {
+    name: templateConfig.name,
+    description: templateConfig.description,
+    template: templateConfig.generate(profile, strategy)
+  };
 }
 
 /**
@@ -131,12 +125,12 @@ export function getTemplate(intent) {
  */
 export function populateTemplate(template, variables) {
   let result = template;
-  
+
   for (const [key, value] of Object.entries(variables)) {
     const placeholder = new RegExp(`{{\\s*${key}\\s*}}`, 'g');
     result = result.replace(placeholder, value);
   }
-  
+
   return result;
 }
 
@@ -145,5 +139,11 @@ export function populateTemplate(template, variables) {
  * @returns {Object}
  */
 export function getAllTemplates() {
-  return { ...TEMPLATES };
+  return Object.entries(TEMPLATES).reduce((acc, [key, val]) => {
+    acc[key] = {
+      name: val.name,
+      description: val.description
+    };
+    return acc;
+  }, {});
 }

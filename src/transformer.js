@@ -41,6 +41,8 @@ export function sanitizeInput(input) {
 /**
  * Transform raw input into an optimized prompt
  * @param {string} rawInput - User's original input
+ * @param {string|null} overrideIntent - Manual intent override
+ * @param {string} modelId - Target LLM model ID
  * @returns {{ 
  *   optimizedPrompt: string, 
  *   metadata: { 
@@ -53,17 +55,17 @@ export function sanitizeInput(input) {
  *   } 
  * }}
  */
-export function transformPrompt(rawInput) {
+export function transformPrompt(rawInput, overrideIntent = null, modelId = 'gemini') {
   const startTime = performance.now();
 
   // Step 1: Sanitize input
   const cleanInput = sanitizeInput(rawInput);
-  
+
   if (!cleanInput) {
     return {
       optimizedPrompt: '',
       metadata: {
-        intent: 'none',
+        intent: 'code_generation',
         confidence: 0,
         templateName: 'None',
         inputLength: 0,
@@ -74,10 +76,20 @@ export function transformPrompt(rawInput) {
   }
 
   // Step 2: Classify intent
-  const { intent, confidence, matchedBy } = classifyIntent(cleanInput);
+  let intent, confidence, matchedBy;
+  if (overrideIntent && overrideIntent !== 'auto') {
+    intent = overrideIntent;
+    confidence = 1;
+    matchedBy = 'manual';
+  } else {
+    const classification = classifyIntent(cleanInput);
+    intent = classification.intent;
+    confidence = classification.confidence;
+    matchedBy = classification.matchedBy;
+  }
 
-  // Step 3: Get appropriate template
-  const template = getTemplate(intent);
+  // Step 3: Get appropriate template for the model
+  const template = getTemplate(intent, modelId);
 
   // Step 4: Populate template with input
   const optimizedPrompt = populateTemplate(template.template, {

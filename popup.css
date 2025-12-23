@@ -2,24 +2,24 @@
   --bg-primary: rgba(28, 28, 32, 0.92);
   --bg-secondary: rgba(45, 45, 52, 0.85);
   --bg-input: rgba(55, 55, 65, 0.8);
-  
+
   --border-subtle: rgba(255, 255, 255, 0.08);
   --border-focus: rgba(99, 102, 241, 0.5);
-  
+
   --accent: #6366f1;
   --accent-hover: #818cf8;
   --success: #10b981;
-  
+
   --text-primary: #f1f5f9;
   --text-secondary: #94a3b8;
   --text-muted: #64748b;
-  
+
   --intent-coding: #22d3ee;
   --intent-explanation: #a78bfa;
   --intent-creative: #f472b6;
   --intent-analysis: #34d399;
   --intent-general: #94a3b8;
-  
+
   --radius: 12px;
   --radius-sm: 6px;
 }
@@ -45,7 +45,7 @@ body {
   background: var(--bg-primary);
   border-radius: var(--radius);
   border: 1px solid var(--border-subtle);
-  box-shadow: 
+  box-shadow:
     0 25px 50px -12px rgba(0, 0, 0, 0.5),
     0 0 0 1px rgba(255, 255, 255, 0.05) inset;
   display: flex;
@@ -56,8 +56,8 @@ body {
 /* Header */
 .popup-header {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 12px;
   padding: 14px 16px;
   border-bottom: 1px solid var(--border-subtle);
   -webkit-app-region: drag;
@@ -66,6 +66,7 @@ body {
 .title-row {
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   gap: 8px;
 }
 
@@ -80,9 +81,16 @@ body {
   letter-spacing: -0.01em;
 }
 
-/* Template Select Dropdown */
-.template-select {
-  font-size: 12px;
+.controls-row {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+}
+
+/* Control Select Dropdowns */
+.control-select {
+  flex: 1;
+  font-size: 11px;
   font-weight: 500;
   padding: 6px 10px;
   border-radius: 6px;
@@ -94,17 +102,17 @@ body {
   transition: border-color 0.15s ease;
 }
 
-.template-select:hover {
+.control-select:hover {
   border-color: var(--accent);
 }
 
-.template-select:focus {
+.control-select:focus {
   outline: none;
   border-color: var(--accent);
   box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
 }
 
-.template-select option {
+.control-select option {
   background: #1a1a25;
   color: var(--text-primary);
 }

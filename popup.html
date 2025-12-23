@@ -1,15 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com;">
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com;">
   <title>Prompt Compiler</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="popup.css">
 </head>
+
 <body>
   <div class="popup-container">
     <!-- Header -->
@@ -18,24 +23,35 @@
         <span class="app-icon">⚡</span>
         <h1>Prompt Compiler</h1>
       </div>
-      <select id="templateSelect" class="template-select">
-        <option value="auto">Auto-detect</option>
-        <option value="coding">💻 Coding</option>
-        <option value="explanation">📚 Explanation</option>
-        <option value="creative">✨ Creative</option>
-        <option value="analysis">🔍 Analysis</option>
-        <option value="general">📝 General</option>
-      </select>
+
+      <!-- Controls Row -->
+      <div class="controls-row">
+        <!-- Profile Selector -->
+        <select id="profileSelect" class="control-select">
+          <option value="beginner_default">Beginner Default</option>
+          <!-- More profiles populated dynamically -->
+        </select>
+
+        <!-- Model Selector -->
+        <select id="modelSelect" class="control-select">
+          <option value="gemini" selected>Gemini 1.5</option>
+          <option value="claude">Claude 3.5</option>
+          <option value="gpt">GPT-4o</option>
+        </select>
+
+        <!-- Mode Selector -->
+        <select id="templateSelect" class="control-select">
+          <option value="auto">Auto-detect</option>
+          <option value="code_generation">💻 Generation</option>
+          <option value="code_review">🕵️ Review</option>
+          <option value="code_understanding">🧠 Understanding</option>
+        </select>
+      </div>
     </header>
 
     <!-- Input Section -->
     <section class="input-section">
-      <textarea 
-        id="inputArea" 
-        class="input-field" 
-        placeholder="Type your prompt..."
-        autofocus
-      ></textarea>
+      <textarea id="inputArea" class="input-field" placeholder="Type your prompt or paste code..." autofocus></textarea>
       <div class="input-meta">
         <span id="charCount">0 chars</span>
         <span class="shortcut-hint">⌘⇧P to toggle</span>
@@ -77,6 +93,7 @@
     </footer>
   </div>
 
-  <script src="popup.js"></script>
+  <script src="popup.js" type="module"></script>
 </body>
+
 </html>
